@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gifs_store/widgets/menubarlines.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,14 +20,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       "https://api.giphy.com/v1/gifs/search?api_key=pe3ZWyViWslU9f87eJGnEdq3vg4gYkJ0&limit=25&offset=0&rating=G&lang=en&q=";
 
   var data;
-  var total_count;
+  var totalCount;
 
   TextEditingController textEditingController = TextEditingController();
 
   Future<void> getData() async {
     Response response = await get(Uri.parse(apiURL + query));
     data = jsonDecode(response.body)["data"];
-    total_count = jsonDecode(response.body)["pagination"]["total_count"];
+    totalCount = jsonDecode(response.body)["pagination"]["total_count"];
     if (response.statusCode >= 200 && response.statusCode <= 400) {
       isGifsLoaded = true;
     } else {
@@ -145,7 +144,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
-                  itemCount: total_count,
+                  itemCount: totalCount,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
@@ -161,7 +160,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ),
               ),
             )
-          else if (isFailedToLoad || total_count == 0)
+          else if (isFailedToLoad || totalCount == 0)
             const Expanded(
               child: Center(
                 child:
